@@ -65,7 +65,7 @@ sensor:
   unit_of_measurement: '%'
   filters:
     - calibrate_linear:
-      - 0.32324  -> 100.0
+      - 0.35840  -> 100.0
       - 0.75391 -> 0
   name: "Plant - Moisture Level"
   update_interval: 30s
