@@ -1,0 +1,71 @@
+substitutions:
+  name: esphome-web-2cd81f
+  friendly_name: ESPHome Air Quality
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.6.0
+  name_add_mac_suffix: false
+  project:
+    name: esphome.web
+    version: dev
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+# Allow Over-The-Air updates
+ota:
+- platform: esphome
+
+# Allow provisioning Wi-Fi via serial
+improv_serial:
+
+wifi:
+  # Set up a wifi access point
+  ap: {}
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device via WiFi AP.
+captive_portal:
+
+dashboard_import:
+  package_import_url: github://esphome/example-configs/esphome-web/esp8266.yaml@main
+  import_full_config: true
+
+# To have a "next url" for improv serial
+web_server:
+i2c:
+  - id: bus1
+    scl: 5
+    sda: 4
+  
+# Serial for IKEA sensor
+uart:
+  - rx_pin: D7
+    baud_rate: 9600
+
+
+# Example configuration entry
+sensor:
+  - platform: aht10
+    i2c_id: bus1
+    variant: AHT20
+    address: 0x38
+    temperature:
+      name: "AQ Temperature"
+    humidity:
+      name: "AQ Humidity"
+    update_interval: 60s
+
+## IKEA PMS 2.5um Sensor
+  - platform: pm1006
+    id: aq_sensor
+    pm_2_5:
+      name: $name 2.5µg
